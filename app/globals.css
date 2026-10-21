@@ -1,0 +1,269 @@
+:root {
+  --ink: #121110;
+  --cream: #f4f2ec;
+  --lavender: #c29af6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.word-inner {
+  display: inline-block;
+}
+
+
+
+.hero-loading-beam {
+  animation: loading-beam 2.7s ease-in-out both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity .9s ease, transform .9s cubic-bezier(.22, 1, .36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.speaker-card img {
+  transition: filter .55s ease, transform .8s cubic-bezier(.22, 1, .36, 1);
+}
+
+.speaker-card:hover img {
+  filter: grayscale(0);
+  transform: scale(1.035);
+}
+
+.speaker-scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(194,154,246,.32) 49%, transparent 52%);
+  background-size: 100% 210%;
+  transition: opacity .25s ease;
+}
+
+.speaker-card:hover .speaker-scan::after {
+  opacity: 1;
+  animation: speaker-scan 1.4s linear infinite;
+}
+
+.cursor-ring {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+
+  pointer-events: none;
+
+  transform: translate3d(
+    var(--cursor-x, -100px),
+    var(--cursor-y, -100px),
+    0
+  );
+}
+
+/* Общие параметры четырёх уголков */
+.summit-cursor-dot {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+
+  border-radius: 50%;
+  background: var(--lavender);
+
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  will-change: transform;
+
+  transition: opacity 0.2s ease;
+}
+
+.summit-cursor-frame {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  will-change: transform;
+
+  transition: opacity 0.2s ease;
+}
+
+.summit-cursor-frame-inner {
+  position: absolute;
+  inset: 0;
+
+  transition: transform 0.35s
+    cubic-bezier(.22, 1, .36, 1);
+}
+
+.summit-cursor-frame[data-hover="true"]
+.summit-cursor-frame-inner {
+  transform: scale(1.8) rotate(45deg);
+}
+
+.summit-cursor-corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: var(--lavender);
+  border-style: solid;
+}
+
+.summit-cursor-tl {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.summit-cursor-tr {
+  top: 0;
+  right: 0;
+  border-width: 1px 1px 0 0;
+}
+
+.summit-cursor-bl {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1px 1px;
+}
+
+.summit-cursor-br {
+  right: 0;
+  bottom: 0;
+  border-width: 0 1px 1px 0;
+}
+.vis-ticket {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+@media (pointer: coarse),
+(prefers-reduced-motion: reduce) {
+  .summit-cursor-dot,
+  .summit-cursor-frame {
+    display: none;
+  }
+}
+
+.sticky-enter {
+  animation: sticky-enter .35s ease both;
+}
+
+.dot-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--dot-cols), minmax(0, 1fr));
+  gap: .45rem .7rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.video-fallback {
+  background: #242121;
+}
+
+.loop-marquee {
+  display: flex;
+  width: max-content;
+  animation: loop-marquee 28s linear infinite;
+}
+
+.loop-marquee:hover {
+  animation-play-state: paused;
+}
+.hero-vis,
+.hero-title,
+.hero-title .word-inner {
+  will-change: transform;
+}
+
+.hero-title .word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.hero-title .word-inner {
+  display: inline-block;
+}
+
+
+@keyframes loading-beam {
+  0% { transform: translateX(-110%); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateX(310%); opacity: .3; }
+}
+
+@keyframes speaker-scan {
+  from { background-position: 0 -90%; }
+  to { background-position: 0 110%; }
+}
+
+@keyframes sticky-enter {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes loop-marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-ring { display: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-title .word-inner,
+  .hero-vis,
+  .hero-loading-beam { animation: none; }
+}
