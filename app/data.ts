@@ -215,6 +215,6 @@ export const FAQS = [
   },
   { q: "Will sessions be recorded? Can I attend virtually?", a: ["The Summit is in person only."] },
   { q: "Where should I stay?", a: ["We recommend staying at Hotel Luma, Hotel VIA, or Hotel Zeppelin."] },
-  { q: "Are there refunds? Can I transfer my ticket?", a: ["A full refund is available more than 30 days before the event, 50% refund between 15 to 30 days before, and no refund less than 15 days before the event. You can transfer your ticket 7 days before the event date. Email us at vis@roboflowevents.com if you have any questions."] },
-  { q: "Can I speak or sponsor?", a: ["Email vis@roboflowevents.com with a short description of what you would like to present or how you would like to participate. Product pitches will not be accepted."] },
+  { q: "Are there refunds? Can I transfer my ticket?", a: ["A full refund is available more than 30 days before the event, 50% refund between 15 to 30 days before, and no refund less than 15 days before the event. You can transfer your ticket 7 days before the event date. Email us at dlt@roboflowevents.com if you have any questions."] },
+  { q: "Can I speak or sponsor?", a: ["Email dlt@roboflowevents.com with a short description of what you would like to present or how you would like to participate. Product pitches will not be accepted."] },
 ];

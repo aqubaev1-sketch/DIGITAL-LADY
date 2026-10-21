@@ -1,4 +1,4 @@
-# Visual Intelligence Summit — Next.js rebuild
+# Digital Lady Technopark — Next.js site
 
 High-fidelity local reconstruction of `https://summit.roboflow.com/`, created from runtime and shipped-artifact evidence gathered with REA.
 
