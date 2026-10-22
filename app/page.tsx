@@ -3,12 +3,15 @@
 import { type CSSProperties, useEffect, useRef, useState, useLayoutEffect } from "react";
 import {
   AGENDA,
+  AI_AGENT_PROJECTS,
   APPLY_URL,
   ATTENDEE_ROWS,
   EVENT_STATS,
-  FAQS,
+  LABORATORIES,
   SESSION_FORMATS,
   SPEAKERS,
+  TOMIRIS_PROJECTS,
+  type Project,
   type Session,
   type Speaker,
 } from "./data";
@@ -93,7 +96,16 @@ function useReveals() {
       },
       { rootMargin: "0px 0px -8%", threshold: 0.08 },
     );
-    elements.forEach((element) => observer.observe(element));
+    elements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      const isAlreadyVisible = rect.bottom > 0 && rect.top < window.innerHeight * 0.92;
+
+      if (isAlreadyVisible) {
+        element.classList.add("is-visible");
+      } else {
+        observer.observe(element);
+      }
+    });
     return () => observer.disconnect();
   }, []);
 }
@@ -962,7 +974,6 @@ function Intro() {
         <VideoReel compact />
       </div>
       <EventOverview />
-      <Agenda />
       <div aria-label="Digital Lady Technopark 2026" className="relative overflow-hidden border-t border-ink/15 py-5 md:py-7">
         <div aria-hidden="true" className="loop-marquee">
           {[0, 1].map((copy) => <div key={copy} className="flex shrink-0 items-center">{Array.from({ length: 3 }, (_, index) => <span key={index} className="flex items-center gap-6 whitespace-nowrap pr-6 text-3xl font-bold tracking-[-0.02em] md:gap-10 md:pr-10 md:text-5xl">Digital Lady Technopark<span className="font-mono font-normal tracking-tight">2026</span><img src="/figma/vector.svg" alt="" className="asset-dark size-6 md:size-9" /></span>)}</div>)}
@@ -972,12 +983,12 @@ function Intro() {
   );
 }
 
-function Speakers() {
+function Team() {
   return (
-    <section id="speakers" className="bg-ink text-cream">
+    <section id="team" className="bg-ink text-cream">
       <div className="mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-36">
-        <p className="font-mono text-xs tracking-widest text-cream/50 uppercase">Speakers</p>
-        <h2 className="reveal mt-6 block max-w-4xl text-balance text-4xl font-medium leading-[1.08] tracking-[-0.02em] md:text-6xl">The people using visual AI at scale, sharing what almost no one else knows yet</h2>
+        <p className="font-mono text-xs tracking-widest text-lavender uppercase">DIGITAL LADY TECHNOPARK</p>
+        <h2 className="reveal mt-6 block max-w-4xl text-balance text-4xl font-medium leading-[1.08] tracking-[-0.02em] md:text-6xl">Наша команда помогает студентам превращать идеи в реальные технологические проекты</h2>
         <ul className="mt-20 grid sm:grid-cols-2 lg:grid-cols-4">
           {SPEAKERS.map((speaker, index) => (
             <li key={speaker.name} className="speaker-card reveal group relative -ml-px -mt-px border border-lavender/30 transition-colors duration-500 hover:border-lavender/60">
@@ -986,7 +997,13 @@ function Speakers() {
               </span>
               <div className="relative flex aspect-[4/5] items-end justify-end overflow-hidden p-4 md:p-5">
                 <div aria-hidden="true" className="speaker-scan pointer-events-none absolute inset-0">
-                  <img src={speaker.image} alt="" loading="lazy" className="absolute inset-0 size-full object-cover grayscale" />
+                  <img
+                    src={speaker.image}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 size-full object-cover grayscale"
+                    style={{ objectPosition: speaker.imagePosition ?? "50% 18%" }}
+                  />
                   <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink/90 to-transparent" />
                 </div>
                 <div className="relative text-right"><h3 className="text-2xl font-medium tracking-[-0.01em] md:text-3xl">{speaker.name}</h3><p className="mt-1 text-sm text-lavender">{speaker.role}</p>{speaker.org && <p className="mt-0.5 font-mono text-xs leading-[1.35] tracking-widest text-lavender/70 uppercase">{speaker.org}</p>}</div>
@@ -1394,17 +1411,189 @@ function Tickets() {
   );
 }
 
-function Faq() {
-  const [open, setOpen] = useState<number | null>(null);
+function Laboratories() {
   return (
-    <section id="faq" className="relative overflow-hidden bg-ink text-cream"><div className="mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-36"><div className="flex flex-col gap-14 md:flex-row md:gap-16 lg:gap-24"><div className="md:w-[34%] md:shrink-0"><h2 className="reveal block text-7xl font-bold leading-[0.9] tracking-[-0.04em] md:text-8xl">FAQ</h2><div className="mt-10 border-t border-cream/15 pt-8 md:mt-14"><p className="text-lg font-medium tracking-[-0.01em]">Have a question about the Summit?</p><p className="mt-1 text-cream/50">We would like to hear from you.</p><a href="mailto:dlt@roboflowevents.com" className="mt-6 inline-flex items-center gap-2 border-b border-cream/40 pb-0.5 transition-colors duration-300 hover:border-lavender hover:text-lavender">dlt@roboflowevents.com <span className="text-lavender">↗</span></a></div></div><div className="md:flex-1"><ul className="border-t border-cream/15">{FAQS.map((faq, index) => { const expanded = open === index; return <li key={faq.q} className="border-b border-cream/15"><h3><button type="button" aria-expanded={expanded} aria-controls={`faq-panel-${index}`} onClick={() => setOpen(expanded ? null : index)} className="flex w-full items-center justify-between gap-6 py-6 text-left transition-colors duration-300 hover:text-lavender md:py-7"><span className="text-lg font-medium tracking-[-0.01em] md:text-xl">{faq.q}</span><span aria-hidden="true" className={`shrink-0 text-xl leading-none text-lavender transition-transform duration-300 ${expanded ? "rotate-45" : ""}`}>+</span></button></h3><div id={`faq-panel-${index}`} className={`grid transition-[grid-template-rows] duration-400 ease-out ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}><div className="overflow-hidden"><div className="max-w-2xl pb-8 text-cream/60">{"a" in faq && faq.a?.map((paragraph) => <p key={paragraph} className="mt-0 leading-relaxed [&+p]:mt-5">{paragraph}</p>)}{"bullets" in faq && faq.bullets && <ul className="flex flex-col gap-3">{faq.bullets.map((bullet) => <li key={bullet} className="flex gap-4 leading-relaxed"><span aria-hidden="true" className="text-cream/30">—</span><span>{bullet}</span></li>)}</ul>}</div></div></div></li>; })}</ul></div></div></div></section>
+    <section id="laboratories" className="relative overflow-hidden bg-ink text-cream">
+      <DotPattern rows={6} cols={9} className="pointer-events-none absolute right-8 top-16 text-lavender/30 md:right-24" />
+      <div className="mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-36">
+        <p className="font-mono text-xs tracking-widest text-lavender uppercase">DLT LABS</p>
+        <div className="mt-6 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <h2 className="reveal block max-w-4xl text-5xl font-bold leading-[0.92] tracking-[-0.04em] md:text-8xl">
+            Наши лаборатории
+          </h2>
+          <p className="max-w-md text-lg leading-relaxed text-cream/60">
+            Учебные пространства, где студенты осваивают современные технологии и превращают знания в практические проекты.
+          </p>
+        </div>
+
+        <ul className="mt-20 grid sm:grid-cols-2">
+          {LABORATORIES.map((laboratory, index) => (
+            <li
+              key={laboratory.name}
+              className="lab-card reveal group relative -ml-px -mt-px overflow-hidden border border-lavender/30 bg-ink transition-colors duration-500 hover:border-lavender"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden border-b border-lavender/30">
+                <img
+                  src={laboratory.image}
+                  alt={laboratory.alt}
+                  loading="lazy"
+                  className="lab-card-image absolute inset-0 size-full object-cover grayscale"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent" />
+                <span className="absolute left-4 top-4 bg-lavender px-2.5 py-1 font-mono text-[10px] font-bold tracking-widest text-ink">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <div className="p-5 md:p-8">
+                <h3 className="text-3xl font-medium tracking-[-0.02em] md:text-4xl">
+                  {laboratory.name}
+                </h3>
+                <p className="mt-5 max-w-2xl leading-relaxed text-cream/60">
+                  {laboratory.description}
+                </p>
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {laboratory.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-lavender/40 px-3 py-1.5 font-mono text-[10px] tracking-widest text-lavender"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <li className="project-card reveal group relative -ml-px -mt-px overflow-hidden border border-ink/15 bg-cream">
+      <div className="relative aspect-[4/3] overflow-hidden border-b border-ink/15 bg-ink">
+        <img
+          src={project.image}
+          alt={project.alt}
+          loading="lazy"
+          className="project-card-image absolute inset-0 size-full object-cover grayscale"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent" />
+        <span className="absolute left-4 top-4 bg-lavender px-2.5 py-1 font-mono text-[10px] font-bold tracking-widest text-ink">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="absolute bottom-4 left-4 border border-cream/30 bg-ink/85 px-3 py-1.5 font-mono text-[10px] tracking-widest text-cream uppercase">
+          {project.status}
+        </span>
+      </div>
+
+      <div className="p-5 md:p-6">
+        <h3 className="text-3xl font-medium tracking-[-0.02em]">{project.name}</h3>
+        <p className="mt-5 leading-relaxed text-ink/60">{project.description}</p>
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.technologies.map((technology) => (
+            <span
+              key={technology}
+              className="border border-ink/15 px-2.5 py-1 font-mono text-[10px] tracking-widest text-ink/70"
+            >
+              {technology}
+            </span>
+          ))}
+        </div>
+
+        <details className="project-details mt-8 border-t border-ink/15 pt-5">
+          <summary className="flex items-center justify-between font-mono text-xs tracking-widest text-ink uppercase">
+            Подробнее
+            <span aria-hidden="true" className="project-details-icon text-lg text-lavender">+</span>
+          </summary>
+          <div className="mt-5 flex flex-col gap-4 text-sm text-ink/60">
+            {project.eventDate && (
+              <p>
+                <span className="font-mono text-[10px] tracking-widest text-ink/40 uppercase">Участие</span><br />
+                STARTUP-TOMIRIS · {project.eventDate}
+              </p>
+            )}
+            {project.achievement && (
+              <p>
+                <span className="font-mono text-[10px] tracking-widest text-ink/40 uppercase">Результат</span><br />
+                {project.achievement}
+              </p>
+            )}
+            {project.mentor && (
+              <p>
+                <span className="font-mono text-[10px] tracking-widest text-ink/40 uppercase">Руководитель проекта</span><br />
+                {project.mentor}
+              </p>
+            )}
+            <div>
+              <p className="font-mono text-[10px] tracking-widest text-ink/40 uppercase">{project.teamName}</p>
+              <ul className="mt-2 flex flex-col gap-1">
+                {project.participants.map((participant) => <li key={participant}>— {participant}</li>)}
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+    </li>
+  );
+}
+
+function Projects() {
+  return (
+    <section id="projects" className="relative overflow-hidden bg-cream text-ink">
+      <DotPattern glyph="x" rows={5} cols={8} className="pointer-events-none absolute right-8 top-16 text-lavender/60 md:right-24" />
+      <div className="mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-36">
+        <p className="font-mono text-xs tracking-widest text-ink/60 uppercase">DLT PROJECTS</p>
+        <div className="mt-6 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <h2 className="reveal block max-w-4xl text-5xl font-bold leading-[0.92] tracking-[-0.04em] md:text-8xl">Проекты</h2>
+          <p className="max-w-md text-lg leading-relaxed text-ink/60">
+            Студенческие и исследовательские разработки, которые проходят путь от идеи до работающего прототипа.
+          </p>
+        </div>
+
+        <div className="mt-20">
+          <div className="flex flex-wrap items-end justify-between gap-5 border-b border-ink/15 pb-5">
+            <h3 className="text-3xl font-medium tracking-[-0.02em] md:text-4xl">AI-агенты</h3>
+            <p className="font-mono text-xs tracking-widest text-ink/50 uppercase">03 проекта</p>
+          </div>
+          <ul
+            className="project-grid mt-10"
+            style={{ "--project-columns": 3 } as CSSProperties}
+          >
+            {AI_AGENT_PROJECTS.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
+          </ul>
+        </div>
+
+        <div className="mt-24">
+          <div className="flex flex-col gap-5 border-b border-ink/15 pb-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="font-mono text-xs tracking-widest text-lavender uppercase">8 октября 2026 · сертификаты участников</p>
+              <h3 className="mt-3 text-3xl font-medium tracking-[-0.02em] md:text-4xl">STARTUP-TOMIRIS</h3>
+            </div>
+            <p className="max-w-md leading-relaxed text-ink/60">
+              Четыре студенческие команды Digital Lady Technopark представили свои разработки на конкурсе инновационных проектов.
+            </p>
+          </div>
+          <ul
+            className="project-grid mt-10"
+            style={{ "--project-columns": 4 } as CSSProperties}
+          >
+            {TOMIRIS_PROJECTS.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
+          </ul>
+        </div>
+      </div>
+    </section>
   );
 }
 
 function Footer() {
   const text = "Digital Lady Technopark · 2026 · QyzPU ·  ";
   return (
-    <footer className="border-t border-cream/10 bg-ink text-cream"><div className="overflow-hidden border-b border-cream/10 py-6 text-4xl font-bold tracking-[-0.02em] text-lavender md:text-6xl"><div className="loop-marquee">{[0, 1].map((copy) => <span key={copy} className="shrink-0 whitespace-nowrap">{text}{text}</span>)}</div></div><div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-10 px-4 py-14 md:px-8"><div><div className="flex items-center"><span className="text-2xl font-bold tracking-[-0.03em] text-lavender">DLT</span></div><div className="mt-6 flex items-center gap-3"><span className="font-mono text-xs tracking-widest text-cream/50">PRESENTED BY</span><a href="https://roboflow.com" target="_blank" rel="noopener noreferrer" aria-label="Roboflow"><RoboflowWordmark className="w-28" /></a></div></div><nav aria-label="Footer" className="flex flex-col gap-2 font-mono text-xs tracking-widest text-cream/60 uppercase"><a href="#speakers" className="hover:text-lavender">Speakers</a><ApplyLink className="uppercase hover:text-lavender">Apply to attend</ApplyLink><a href="https://roboflow.com" target="_blank" rel="noopener noreferrer" className="hover:text-lavender">Roboflow.com</a></nav><button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="border border-cream/30 px-5 py-3 font-mono text-xs tracking-widest uppercase transition-colors duration-300 hover:border-lavender hover:bg-lavender hover:text-ink">Back to top ↑</button></div><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 border-t border-cream/10 px-4 py-5 font-mono text-[10px] tracking-widest text-cream/40 uppercase md:px-8"><p>© 2026 Roboflow, Inc.</p><p>Where AI meets the physical world</p></div></footer>
+    <footer className="border-t border-cream/10 bg-ink text-cream"><div className="overflow-hidden border-b border-cream/10 py-6 text-4xl font-bold tracking-[-0.02em] text-lavender md:text-6xl"><div className="loop-marquee">{[0, 1].map((copy) => <span key={copy} className="shrink-0 whitespace-nowrap">{text}{text}</span>)}</div></div><div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-10 px-4 py-14 md:px-8"><div><div className="flex items-center"><span className="text-2xl font-bold tracking-[-0.03em] text-lavender">DLT</span></div><div className="mt-6 flex items-center gap-3"><span className="font-mono text-xs tracking-widest text-cream/50">PRESENTED BY</span><a href="https://roboflow.com" target="_blank" rel="noopener noreferrer" aria-label="Roboflow"><RoboflowWordmark className="w-28" /></a></div></div><nav aria-label="Footer" className="flex flex-col gap-2 font-mono text-xs tracking-widest text-cream/60 uppercase"><a href="#laboratories" className="hover:text-lavender">Лаборатории</a><a href="#projects" className="hover:text-lavender">Проекты</a><a href="#team" className="hover:text-lavender">Команда</a></nav><button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="border border-cream/30 px-5 py-3 font-mono text-xs tracking-widest uppercase transition-colors duration-300 hover:border-lavender hover:bg-lavender hover:text-ink">Наверх ↑</button></div><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 border-t border-cream/10 px-4 py-5 font-mono text-[10px] tracking-widest text-cream/40 uppercase md:px-8"><p>© 2026 Digital Lady Technopark</p><p>QyzPU · Институт ФМЦТ</p></div></footer>
   );
 }
 
@@ -1418,10 +1607,11 @@ export default function Home() {
         <Hero />
         <Narrative />
         <Intro />
-        <Speakers />
+        <Projects />
+        <Team />
         <TimePlace />
+        <Laboratories />
         <Tickets />
-        <Faq />
       </main>
       <Footer />
     </>

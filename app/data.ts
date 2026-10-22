@@ -3,6 +3,7 @@ export type Speaker = {
   role: string;
   org?: string;
   image?: string;
+  imagePosition?: string;
 };
 
 export type Session = {
@@ -21,15 +22,37 @@ export type AgendaRow = {
   card?: boolean;
 };
 
+export type Laboratory = {
+  name: string;
+  description: string;
+  image: string;
+  alt: string;
+  tags: string[];
+};
+
+export type Project = {
+  name: string;
+  description: string;
+  image: string;
+  alt: string;
+  technologies: string[];
+  status: string;
+  mentor?: string;
+  teamName: string;
+  participants: string[];
+  eventDate?: string;
+  achievement?: string;
+};
+
 export const APPLY_URL = "https://app.zuddl.com/roboflow/applytovis/";
 
 export const SPEAKERS: Speaker[] = [
-  { name: "Хамза Даулетбек", role: "Руководитель", image: "/images/speakers/joseph-nelson.webp" },
-  { name: "Жумадилова Айнур", role: "Менеджер по проекту", image: "/images/speakers/chay-ryali.webp" },
-  { name: "Еркинулы Нурислам", role: "Менеджер по проекту", image: "/images/speakers/laura-gustafson.webp" },
-  { name: "Кубаев Айсултан", role: "Инженер-программист", image: "/images/speakers/nagesh-saldi.webp" },
-  { name: "Байсултан Рамазан", role: "Инженер-программист", image: "/images/speakers/alvin-clark.webp" },
-  { name: "Жумабек Алмасбек", role: "Инженер-программист", image: "/images/speakers/brad-dwyer.webp" },
+  { name: "Хамза Даулетбек", role: "Руководитель Digital Lady Technopark", image: "/images/team/hamza-dauletbek.jpeg", imagePosition: "50% 24%" },
+  { name: "Байсултан Рамазан", role: "Инженер-программист", image: "/images/team/baisultan-ramazan.jpeg", imagePosition: "50% 24%" },
+  { name: "Еркиулы Нурислам", role: "Менеджер по проекту", image: "/images/team/erkiuly-nurislam.jpeg", imagePosition: "50% 34%" },
+  { name: "Айнур Жамадилова", role: "Менеджер по проекту", image: "/images/team/ainur-zhamadilova.jpeg", imagePosition: "50% 48%" },
+  { name: "Кубаев Айсултан", role: "Инженер-программист", image: "/images/team/kubaev-aisultan.jpeg", imagePosition: "50% 35%" },
+  { name: "Жумабек Алмасбек", role: "Инженер-программист", image: "/images/team/almasbek-zhumabek.jpg", imagePosition: "50% 32%" },
 ];
 
 const person = (name: string): Speaker => {
@@ -176,45 +199,140 @@ export const AGENDA: AgendaRow[] = [
   { time: "5:00 PM", dateTime: "17:00", endTime: "7:00 PM", endDateTime: "19:00", card: true, plenary: { kind: "Networking", title: "Reception", note: "Dinner, drinks & networking" } },
 ];
 
-export const FAQS = [
+export const LABORATORIES: Laboratory[] = [
   {
-    q: "Who should attend?",
-    a: [
-      "Anyone pushing AI past the screen and into the physical world. That includes ML and perception engineers, developers new to vision, founders building vision-native products, and business and technical leaders deciding where vision fits into their operations.",
-      "The program is built around two types of sessions. Showcase sessions are led by teams running vision at scale across plants, sites, and fleets. Build sessions are hands-on workshops where you'll learn step-by-step and leave with something you can use immediately. Your ticket provides access to all sessions.",
-      "You do not need to be a Roboflow user or customer to attend.",
-    ],
+    name: "Apple Class",
+    description:
+      "Пространство для разработки цифровых продуктов в экосистеме Apple. Студенты знакомятся с созданием приложений, интерфейсов, мультимедийного контента и принципами современного продуктового дизайна.",
+    image: "/images/laboratories/apple-class.jpeg",
+    alt: "Студенты работают с компьютерами в технологической лаборатории",
+    tags: ["APPLE ECOSYSTEM", "SWIFT", "UI/UX"],
   },
   {
-    q: "What is the format?",
-    a: [
-      "One day with multiple stages, featuring talks from the people building and deploying visual AI.",
-      "Alongside the talks you can take part in hands-on learning and build sessions led by experts in vision AI and Roboflow engineers. Bring a laptop if you plan to do a hands-on session.",
-      "There are also a demo floor and interactive experiences around the venue. Some show real world use cases, some are purely experimental. The day ends with a reception for you to network and connect with people in the community.",
-    ],
+    name: "Cisco Class",
+    description:
+      "Учебный класс для освоения компьютерных сетей и сетевого администрирования. Здесь студенты изучают настройку оборудования, построение сетевой инфраструктуры и основы кибербезопасности.",
+    image: "/images/laboratories/cisco-class.jpeg",
+    alt: "Презентация современных сетевых технологий",
+    tags: ["NETWORKS", "CISCO", "CYBERSECURITY"],
   },
   {
-    q: "What is included with a pass?",
-    bullets: [
-      "All keynotes and talks across every stage",
-      "Hands-on learning and building sessions, subject to capacity",
-      "Roundtable discussions, subject to capacity",
-      "Demo floor access",
-      "Breakfast, lunch, coffee, and snacks",
-      "Closing reception with food and drinks included",
-      "Conference materials and swag",
-    ],
+    name: "Coding Class",
+    description:
+      "Практическая среда для изучения программирования, алгоритмов и веб-разработки. Студенты создают приложения, работают в командах и проходят путь от идеи до готового программного продукта.",
+    image: "/images/laboratories/coding-class.jpeg",
+    alt: "Практическое занятие по программированию",
+    tags: ["WEB", "PROGRAMMING", "TEAMWORK"],
   },
   {
-    q: "Should I bring anything?",
-    a: [
-      "Two things.",
-      "Bring your computer if you plan to take part in the hands-on sessions. Those are working sessions and you will be building alongside Roboflow engineers, so you will want your own machine.",
-      "Bring a sweater or a jacket. The Midway has indoor and outdoor space, and San Francisco gets cold once the sun goes down, which is right around when the reception starts.",
-    ],
+    name: "Huawei Class",
+    description:
+      "Класс для знакомства с телекоммуникационными, облачными и цифровыми технологиями. Практические занятия помогают понять принципы работы современных информационных систем и инфраструктуры.",
+    image: "/images/laboratories/huawei-class.jpeg",
+    alt: "Образовательная презентация цифровых технологий",
+    tags: ["CLOUD", "TELECOM", "AI"],
   },
-  { q: "Will sessions be recorded? Can I attend virtually?", a: ["The Summit is in person only."] },
-  { q: "Where should I stay?", a: ["We recommend staying at Hotel Luma, Hotel VIA, or Hotel Zeppelin."] },
-  { q: "Are there refunds? Can I transfer my ticket?", a: ["A full refund is available more than 30 days before the event, 50% refund between 15 to 30 days before, and no refund less than 15 days before the event. You can transfer your ticket 7 days before the event date. Email us at dlt@roboflowevents.com if you have any questions."] },
-  { q: "Can I speak or sponsor?", a: ["Email dlt@roboflowevents.com with a short description of what you would like to present or how you would like to participate. Product pitches will not be accepted."] },
+  {
+    name: "3D Lab",
+    description:
+      "Лаборатория цифрового производства, 3D-моделирования и прототипирования. Студенты проектируют трёхмерные модели, готовят их к печати и создают физические прототипы собственных проектов.",
+    image: "/images/laboratories/3d-lab.jpeg",
+    alt: "Работа над технологическим прототипом",
+    tags: ["3D MODELING", "3D PRINTING", "PROTOTYPING"],
+  },
+];
+
+export const AI_AGENT_PROJECTS: Project[] = [
+  {
+    name: "NavIQ",
+    description:
+      "Интеллектуальный AI-агент для сопровождения студентов в учебном процессе. Диагностирует уровень знаний, формирует индивидуальную траекторию обучения, помогает готовиться к занятиям и рекомендует подходящие образовательные ресурсы.",
+    image: "/images/build-hands-on.avif",
+    alt: "Практическая работа студентов с цифровыми технологиями",
+    technologies: ["AI", "АДАПТИВНОЕ ОБУЧЕНИЕ", "УЧЕБНАЯ АНАЛИТИКА"],
+    status: "В разработке",
+    teamName: "Команда Digital Lady Technopark",
+    participants: ["Участники уточняются"],
+  },
+  {
+    name: "Lesson Study Coach",
+    description:
+      "AI-агент для методического сопровождения педагогического эксперимента Lesson Study в рамках выпускных работ бакалавров. Помогает организовать исследование, работать по единой методике и анализировать полученные результаты.",
+    image: "/images/showcase-stage.avif",
+    alt: "Презентация образовательного технологического проекта",
+    technologies: ["AI", "LESSON STUDY", "ПЕДАГОГИКА"],
+    status: "В разработке",
+    teamName: "Команда Digital Lady Technopark",
+    participants: ["Участники уточняются"],
+  },
+  {
+    name: "Zerde AI",
+    description:
+      "AI-агент для подготовки обучающихся к Единому национальному тестированию. Обеспечивает персонализированное обучение, адаптивное тестирование, анализ результатов и развитие академических навыков.",
+    image: "/images/build-hands-on.avif",
+    alt: "Студенты тестируют образовательного AI-агента",
+    technologies: ["AI", "ЕНТ", "АДАПТИВНОЕ ТЕСТИРОВАНИЕ"],
+    status: "В разработке",
+    teamName: "Команда Digital Lady Technopark",
+    participants: ["Участники уточняются"],
+  },
+];
+
+export const TOMIRIS_PROJECTS: Project[] = [
+  {
+    name: "Aspan AI",
+    description:
+      "Интеллектуальный патрульный дрон для повышения безопасности в общественных местах. Компьютерное зрение помогает выявлять опасные ситуации, а система передаёт координаты и визуальную информацию ответственным службам.",
+    image: "/images/showcase-stage.avif",
+    alt: "Презентация проекта Aspan AI",
+    technologies: ["COMPUTER VISION", "YOLO", "DRONE", "GPS"],
+    status: "Демо-тестирование",
+    mentor: "Байсултан Рамазан",
+    teamName: "Aspan Team",
+    participants: ["Студент 01", "Студент 02", "Студент 03"],
+    eventDate: "8 октября 2026",
+    achievement: "Сертификат участника",
+  },
+  {
+    name: "AgroAI",
+    description:
+      "AI-помощник для диагностики заболеваний растений по фотографии. Система анализирует изображение, определяет вероятную проблему и предлагает рекомендации по лечению, профилактике и уходу.",
+    image: "/images/build-hands-on.avif",
+    alt: "Практическая работа над проектом AgroAI",
+    technologies: ["COMPUTER VISION", "MACHINE LEARNING", "MOBILE APP"],
+    status: "Демо-тестирование",
+    mentor: "Кубаев Айсултан",
+    teamName: "AgroAI Team",
+    participants: ["Студент 04", "Студент 05", "Студент 06"],
+    eventDate: "8 октября 2026",
+    achievement: "Сертификат участника",
+  },
+  {
+    name: "Skill to Income",
+    description:
+      "Интеллектуальная платформа, которая анализирует навыки пользователя и помогает превратить их в источник дохода. Система предлагает направление, персональный план действий и рекомендации для выхода на первый заработок.",
+    image: "/images/showcase-stage.avif",
+    alt: "Презентация проекта Skill to Income",
+    technologies: ["NLP", "RECOMMENDATION AI", "WEB PLATFORM"],
+    status: "Демо-тестирование",
+    mentor: "Байсултан Рамазан",
+    teamName: "Skill Team",
+    participants: ["Студент 07", "Студент 08", "Студент 09"],
+    eventDate: "8 октября 2026",
+    achievement: "Сертификат участника",
+  },
+  {
+    name: "nventControl",
+    description:
+      "Цифровая система для учёта и контроля оборудования технопарка. Помогает регистрировать выдачу и возврат устройств, отслеживать их состояние, планировать обслуживание и быстро находить нужные ресурсы.",
+    image: "/images/build-hands-on.avif",
+    alt: "Команда тестирует цифровую систему управления оборудованием",
+    technologies: ["WEB APP", "QR-КОДЫ", "DATABASE", "ANALYTICS"],
+    status: "Демо-тестирование",
+    mentor: "Хамза Даулетбек",
+    teamName: "nventControl Team",
+    participants: ["Студент 10", "Студент 11", "Студент 12"],
+    eventDate: "8 октября 2026",
+    achievement: "Сертификат участника",
+  },
 ];

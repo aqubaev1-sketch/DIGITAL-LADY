@@ -81,6 +81,58 @@ button {
   animation: speaker-scan 1.4s linear infinite;
 }
 
+.lab-card-image {
+  transition: filter .55s ease, transform .9s cubic-bezier(.22, 1, .36, 1);
+}
+
+.lab-card:hover .lab-card-image {
+  filter: grayscale(0);
+  transform: scale(1.045);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.project-card-image {
+  transition: filter .55s ease, transform .9s cubic-bezier(.22, 1, .36, 1);
+}
+
+.project-card:hover .project-card-image {
+  filter: grayscale(0);
+  transform: scale(1.045);
+}
+
+.project-details summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.project-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-details-icon {
+  transition: transform .25s ease;
+}
+
+.project-details[open] .project-details-icon {
+  transform: rotate(45deg);
+}
+
+@media (min-width: 40rem) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .project-grid {
+    grid-template-columns: repeat(var(--project-columns), minmax(0, 1fr));
+  }
+}
+
 .cursor-ring {
   position: fixed;
   z-index: 100;
