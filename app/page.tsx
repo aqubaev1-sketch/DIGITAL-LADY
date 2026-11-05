@@ -224,6 +224,34 @@ function CustomCursor() {
   );
 }
 
+const SITE_NAVIGATION = [
+  { href: "#about", label: "О технопарке" },
+  { href: "#projects", label: "Проекты" },
+  { href: "#team", label: "Команда" },
+  { href: "#laboratories", label: "Лаборатории" },
+] as const;
+
+function SiteNavigation({ compact = false }: { compact?: boolean }) {
+  return (
+    <nav
+      aria-label="Основная навигация"
+      className="flex max-w-[calc(100vw-5rem)] items-center gap-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
+      {SITE_NAVIGATION.map((item) => (
+        <a
+          key={item.href}
+          href={item.href}
+          className={`border border-transparent font-mono tracking-widest text-cream/70 uppercase transition-colors duration-300 hover:border-lavender hover:text-lavender ${
+            compact ? "px-2.5 py-1.5 text-[9px] md:px-3 md:text-[10px]" : "px-2.5 py-2 text-[9px] md:px-4 md:text-xs"
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 function StickyHeader() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -239,12 +267,12 @@ function StickyHeader() {
         <a href="#top" aria-label="Digital Lady Technopark" className="font-bold tracking-[-0.04em] text-lavender">
           DLT
         </a>
-        <p className="hidden font-mono text-[10px] tracking-widest text-cream/50 uppercase sm:block">
-          OCT 22 2026 · SAN FRANCISCO
-        </p>
+        <SiteNavigation compact />
+        {/*
         <ApplyLink className="border border-lavender bg-lavender px-4 py-2 font-mono text-[10px] tracking-widest text-ink uppercase transition-colors hover:bg-transparent hover:text-lavender">
           Apply to attend
         </ApplyLink>
+        */}
       </div>
     </header>
   );
@@ -594,15 +622,17 @@ function Hero() {
     >
       <header
         data-hero-bar
-        className="relative z-20 flex items-center justify-between px-4 pt-5 md:px-8 md:pt-6"
+        className="relative z-20 flex items-center justify-between gap-4 px-4 pt-5 md:px-8 md:pt-6"
       >
-        <p className="font-mono text-xs text-cream/60">
-          OCT 22 2026 · SAN FRANCISCO
-        </p>
-
+        <a href="#top" aria-label="Digital Lady Technopark" className="shrink-0 text-lg font-bold tracking-[-0.04em] text-lavender md:text-xl">
+          DLT
+        </a>
+        <SiteNavigation />
+        {/*
         <ApplyLink className="inline-flex items-center border border-cream/30 px-4 py-2 font-mono text-xs tracking-widest text-cream transition-colors duration-300 hover:border-lavender hover:bg-lavender hover:text-ink">
           APPLY TO ATTEND
         </ApplyLink>
+        */}
       </header>
 
       <div
@@ -963,14 +993,14 @@ function Agenda() {
 
 function Intro() {
   return (
-    <section className="relative overflow-hidden bg-cream text-ink">
+    <section id="about" className="relative scroll-mt-20 overflow-hidden bg-cream text-ink">
       <div className="absolute left-4 top-10 flex flex-col gap-5 md:left-10 md:top-16">
         <DotPattern glyph="x" rows={5} cols={8} className="text-lavender/80" />
         <DotPattern rows={6} cols={9} className="text-ink/15" />
       </div>
       <div className="mx-auto flex min-h-[70svh] max-w-2xl flex-col items-center justify-center gap-10 px-6 py-32 md:min-h-[85svh] md:py-40">
-        <h2 className="reveal block text-center text-2xl font-semibold leading-[1.35] tracking-[-0.01em] text-balance md:text-4xl md:leading-[1.3]">Join the world&apos;s most innovative business leaders, founders, and developers pushing AI beyond the screen.</h2>
-        <p className="flex items-center gap-2 font-mono text-[10px] tracking-widest md:text-xs"><span className="bg-ink px-2.5 py-1 text-cream">OCT 22 2026</span><span className="bg-lavender px-2.5 py-1 text-ink">SAN FRANCISCO</span></p>
+        <h2 className="reveal block text-center text-2xl font-semibold leading-[1.35] tracking-[-0.01em] text-balance md:text-4xl md:leading-[1.3]">Технопарк при институте ФМЦТ — это образовательная и технологическая среда, где студенты осваивают современные технологии, развивают практические навыки и превращают свои идеи в реальные проекты.</h2>
+        <p className="flex items-center gap-2 font-mono text-[10px] tracking-widest md:text-xs"><span className="bg-ink px-2.5 py-1 text-cream">ИНСТИТУТ ФМЦТ</span><span className="bg-lavender px-2.5 py-1 text-ink">QYZPU</span></p>
         <VideoReel compact />
       </div>
       <EventOverview />
@@ -1035,11 +1065,11 @@ function TicketFace({ side }: { side: "front" | "back" }) {
   return (
     <div className={`vis-ticket__face vis-ticket__face--${side}`}>
       <div className="vis-ticket__giant" aria-hidden="true">DLT</div><div className="vis-ticket__shine" aria-hidden="true" />
-      <div className="vis-ticket__band"><span>{front ? "DLT" : "SFO"}</span><span>{front ? "DLT" : "SFO"}</span></div>
+      <div className="vis-ticket__band"><span>QYZPU</span><span>QYZPU</span></div>
       <div className="vis-ticket__panel"><div className="vis-ticket__frame"><div className="vis-ticket__stamp">{front ? "Admit one · Oct 22 2026" : "See reverse side"}</div><div className="vis-ticket__title">Digital<br />Lady<br />Technopark</div>
         {front ? <><TicketRow label="Attendee" value="ADMIT ONE" first /><TicketRow label="№" value="DLT-2026" mono /><TicketRow label="Venue" value="The Midway · 900 Marin St" small /><div className="vis-ticket__row vis-ticket__row--last"><div className="vis-ticket__fine">Good for one admission on date shown · not redeemable · retain this ticket · one day, one room</div></div></> : <><TicketRow label="Date" value="Oct 22 2026" first /><TicketRow label="Doors" value="9:00 AM PT" /><TicketRow label="Coordinates" value="37.7460° N · 122.3838° W" mono /><div className="vis-ticket__row vis-ticket__row--last"><div className="vis-ticket__fine">Business leaders, founders &amp; developers pushing AI beyond the screen · talks · build sessions · roundtables</div></div></>}
       </div></div>
-      <div className="vis-ticket__barcode-wrap"><div className="vis-ticket__barcode" aria-hidden="true" /><div className="vis-ticket__barcode-no">DLT-2026</div></div><div className="vis-ticket__perf" aria-hidden="true"><span /></div><div className="vis-ticket__tagline">Where AI meets the physical world</div><div className="vis-ticket__legal">Unauthorized use, purchase or sale voids this ticket · summit.roboflow.com</div>
+      <div className="vis-ticket__barcode-wrap"><div className="vis-ticket__barcode" aria-hidden="true" /><div className="vis-ticket__barcode-no">DLT-2026</div></div><div className="vis-ticket__perf" aria-hidden="true"><span /></div><div className="vis-ticket__tagline">Где идеи превращаются в технологии</div><div className="vis-ticket__legal">Unauthorized use, purchase or sale voids this ticket · summit.roboflow.com</div>
     </div>
   );
 }
@@ -1590,10 +1620,83 @@ function Projects() {
   );
 }
 
+function FooterCatDLT() {
+  const [playing, setPlaying] = useState(false);
+  const playTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (playTimer.current !== null) window.clearTimeout(playTimer.current);
+    };
+  }, []);
+
+  const play = () => {
+    if (playTimer.current !== null) window.clearTimeout(playTimer.current);
+    setPlaying(false);
+    window.requestAnimationFrame(() => {
+      setPlaying(true);
+      playTimer.current = window.setTimeout(() => setPlaying(false), 950);
+    });
+  };
+
+  return (
+    <div>
+      <button
+        type="button"
+        className={`footer-cat-dlt${playing ? " is-playing" : ""}`}
+        onClick={play}
+        onPointerEnter={play}
+        aria-label="Котик играет с буквами DLT"
+      >
+        <span className="footer-dlt-mark" aria-hidden="true">
+          <span className="footer-dlt-letter">D</span>
+          <span className="footer-dlt-letter">L</span>
+          <span className="footer-dlt-letter">T</span>
+        </span>
+        <svg className="footer-cat" viewBox="0 0 120 90" aria-hidden="true">
+          <path className="footer-cat-tail" d="M91 69c27 1 31-27 12-29" />
+          <ellipse className="footer-cat-body" cx="78" cy="65" rx="29" ry="20" />
+          <circle className="footer-cat-head" cx="66" cy="34" r="19" />
+          <path className="footer-cat-ear" d="M50 23 52 5 63 17M70 17 82 6 82 25" />
+          <circle className="footer-cat-eye" cx="60" cy="34" r="1.8" />
+          <circle className="footer-cat-eye" cx="72" cy="34" r="1.8" />
+          <path className="footer-cat-whiskers" d="M57 42 43 39m14 7-14 3m32-7 13-4m-13 8 14 3" />
+          <path className="footer-cat-paw" d="M57 56c-15-1-25-8-38-14" />
+          <circle className="footer-cat-paw-tip" cx="16" cy="41" r="4" />
+        </svg>
+      </button>
+      <p className="mt-3 max-w-xs font-mono text-[10px] tracking-widest text-cream/50 uppercase">
+        Где идеи превращаются в технологии
+      </p>
+    </div>
+  );
+}
+
 function Footer() {
   const text = "Digital Lady Technopark · 2026 · QyzPU ·  ";
   return (
-    <footer className="border-t border-cream/10 bg-ink text-cream"><div className="overflow-hidden border-b border-cream/10 py-6 text-4xl font-bold tracking-[-0.02em] text-lavender md:text-6xl"><div className="loop-marquee">{[0, 1].map((copy) => <span key={copy} className="shrink-0 whitespace-nowrap">{text}{text}</span>)}</div></div><div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-10 px-4 py-14 md:px-8"><div><div className="flex items-center"><span className="text-2xl font-bold tracking-[-0.03em] text-lavender">DLT</span></div><div className="mt-6 flex items-center gap-3"><span className="font-mono text-xs tracking-widest text-cream/50">PRESENTED BY</span><a href="https://roboflow.com" target="_blank" rel="noopener noreferrer" aria-label="Roboflow"><RoboflowWordmark className="w-28" /></a></div></div><nav aria-label="Footer" className="flex flex-col gap-2 font-mono text-xs tracking-widest text-cream/60 uppercase"><a href="#laboratories" className="hover:text-lavender">Лаборатории</a><a href="#projects" className="hover:text-lavender">Проекты</a><a href="#team" className="hover:text-lavender">Команда</a></nav><button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="border border-cream/30 px-5 py-3 font-mono text-xs tracking-widest uppercase transition-colors duration-300 hover:border-lavender hover:bg-lavender hover:text-ink">Наверх ↑</button></div><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 border-t border-cream/10 px-4 py-5 font-mono text-[10px] tracking-widest text-cream/40 uppercase md:px-8"><p>© 2026 Digital Lady Technopark</p><p>QyzPU · Институт ФМЦТ</p></div></footer>
+    <footer id="contacts" className="scroll-mt-20 border-t border-cream/10 bg-ink text-cream">
+      <div className="overflow-hidden border-b border-cream/10 py-6 text-4xl font-bold tracking-[-0.02em] text-lavender md:text-6xl">
+        <div className="loop-marquee">
+          {[0, 1].map((copy) => <span key={copy} className="shrink-0 whitespace-nowrap">{text}{text}</span>)}
+        </div>
+      </div>
+      <div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-10 px-4 py-14 md:px-8">
+        <FooterCatDLT />
+        <nav aria-label="Footer" className="flex flex-col gap-2 font-mono text-xs tracking-widest text-cream/60 uppercase">
+          <a href="#laboratories" className="hover:text-lavender">Лаборатории</a>
+          <a href="#projects" className="hover:text-lavender">Проекты</a>
+          <a href="#team" className="hover:text-lavender">Команда</a>
+        </nav>
+        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="border border-cream/30 px-5 py-3 font-mono text-xs tracking-widest uppercase transition-colors duration-300 hover:border-lavender hover:bg-lavender hover:text-ink">
+          Наверх ↑
+        </button>
+      </div>
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 border-t border-cream/10 px-4 py-5 font-mono text-[10px] tracking-widest text-cream/40 uppercase md:px-8">
+        <p>© 2026 Digital Lady Technopark</p>
+        <p>QyzPU · Институт ФМЦТ</p>
+      </div>
+    </footer>
   );
 }
 

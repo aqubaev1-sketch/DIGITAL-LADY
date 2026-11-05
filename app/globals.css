@@ -275,6 +275,111 @@ button {
 .loop-marquee:hover {
   animation-play-state: paused;
 }
+
+.footer-cat-dlt {
+  position: relative;
+  display: block;
+  width: 250px;
+  height: 108px;
+  overflow: visible;
+  color: var(--cream);
+  text-align: left;
+  cursor: pointer;
+}
+
+.footer-cat-dlt:focus-visible {
+  outline: 1px solid var(--lavender);
+  outline-offset: 8px;
+}
+
+.footer-dlt-mark {
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  display: flex;
+  align-items: flex-end;
+  font-size: 4.7rem;
+  font-weight: 700;
+  line-height: .82;
+  letter-spacing: -.09em;
+  color: var(--lavender);
+}
+
+.footer-dlt-letter {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+
+.footer-cat {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 128px;
+  height: 98px;
+  overflow: visible;
+}
+
+.footer-cat-body,
+.footer-cat-head {
+  fill: var(--cream);
+  stroke: var(--lavender);
+  stroke-width: 1.5;
+}
+
+.footer-cat-ear {
+  fill: var(--lavender);
+  stroke: var(--cream);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.footer-cat-eye {
+  fill: var(--ink);
+}
+
+.footer-cat-tail,
+.footer-cat-whiskers,
+.footer-cat-paw {
+  fill: none;
+  stroke: var(--cream);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.footer-cat-whiskers {
+  stroke-width: 1.5;
+}
+
+.footer-cat-paw {
+  transform-origin: 57px 56px;
+}
+
+.footer-cat-paw-tip {
+  fill: var(--cream);
+}
+
+.footer-cat-dlt.is-playing .footer-cat-paw,
+.footer-cat-dlt.is-playing .footer-cat-paw-tip {
+  animation: footer-cat-paw-tap .72s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.footer-cat-dlt.is-playing .footer-cat-tail {
+  animation: footer-cat-tail-wiggle .85s ease-in-out both;
+  transform-origin: 91px 69px;
+}
+
+.footer-cat-dlt.is-playing .footer-dlt-letter:nth-child(1) {
+  animation: footer-letter-d .72s cubic-bezier(.22, 1, .36, 1) .05s both;
+}
+
+.footer-cat-dlt.is-playing .footer-dlt-letter:nth-child(2) {
+  animation: footer-letter-l .72s cubic-bezier(.22, 1, .36, 1) .12s both;
+}
+
+.footer-cat-dlt.is-playing .footer-dlt-letter:nth-child(3) {
+  animation: footer-letter-t .72s cubic-bezier(.22, 1, .36, 1) .18s both;
+}
 .hero-vis,
 .hero-title,
 .hero-title .word-inner {
@@ -312,10 +417,45 @@ button {
   to { transform: translateX(-50%); }
 }
 
+@keyframes footer-cat-paw-tap {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  38% { transform: rotate(-12deg) translateX(-5px); }
+  58% { transform: rotate(4deg) translateX(1px); }
+}
+
+@keyframes footer-cat-tail-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  35% { transform: rotate(11deg); }
+  65% { transform: rotate(-7deg); }
+}
+
+@keyframes footer-letter-d {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  42% { transform: rotate(-5deg) translateY(-2px); }
+}
+
+@keyframes footer-letter-l {
+  0%, 100% { transform: translateY(0); }
+  44% { transform: translateY(-9px); }
+}
+
+@keyframes footer-letter-t {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  38% { transform: rotate(7deg) translateX(4px); }
+}
+
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor-ring { display: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .hero-title .word-inner,
   .hero-vis,
   .hero-loading-beam { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-cat-dlt *,
+  .loop-marquee {
+    animation: none !important;
+    transition: none !important;
+  }
 }
