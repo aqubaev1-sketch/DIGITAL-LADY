@@ -1501,10 +1501,10 @@ function Laboratories() {
   );
 }
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({ project, index, wide = false }: { project: Project; index: number; wide?: boolean }) {
   return (
     <li className="project-card reveal group relative -ml-px -mt-px overflow-hidden border border-ink/15 bg-cream">
-      <div className="relative aspect-[4/3] overflow-hidden border-b border-ink/15 bg-ink">
+      <div className={`relative overflow-hidden border-b border-ink/15 bg-ink ${wide ? "aspect-video" : "aspect-[4/3]"}`}>
         <img
           src={project.image}
           alt={project.alt}
@@ -1594,7 +1594,7 @@ function Projects() {
             className="project-grid mt-10"
             style={{ "--project-columns": 3 } as CSSProperties}
           >
-            {AI_AGENT_PROJECTS.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
+            {AI_AGENT_PROJECTS.map((project, index) => <ProjectCard key={project.name} project={project} index={index} wide />)}
           </ul>
         </div>
 
