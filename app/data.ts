@@ -48,12 +48,12 @@ export type Project = {
 export const APPLY_URL = "https://app.zuddl.com/roboflow/applytovis/";
 
 export const SPEAKERS: Speaker[] = [
-  { name: "Хамза Даулетбек", role: "Руководитель Digital Lady Technopark", image: "/images/team/hamza-dauletbek.jpeg", imagePosition: "50% 24%" },
-  { name: "Байсултан Рамазан", role: "Инженер-программист", image: "/images/team/baisultan-ramazan.jpeg", imagePosition: "50% 24%" },
-  { name: "Еркиулы Нурислам", role: "Менеджер по проекту", image: "/images/team/erkiuly-nurislam.jpeg", imagePosition: "50% 34%" },
-  { name: "Айнур Жамадилова", role: "Менеджер по проекту", image: "/images/team/ainur-zhamadilova.jpeg", imagePosition: "50% 48%" },
+  { name: "Хамза Даулетбек", role: "Руководитель Digital Lady Technopark", image: "/images/team/team-avatar-placeholder.png", imagePosition: "50% 50%" },
+  { name: "Байсултан Рамазан", role: "Инженер-программист", image: "/images/team/team-avatar-placeholder.png", imagePosition: "50% 50%" },
+  { name: "Еркиулы Нурислам", role: "Менеджер по проекту", image: "/images/team/team-avatar-placeholder.png", imagePosition: "50% 50%" },
+  { name: "Айнур Жамадилова", role: "Менеджер по проекту", image: "/images/team/team-avatar-placeholder.png", imagePosition: "50% 50%" },
   { name: "Кубаев Айсултан", role: "Инженер-программист", image: "/images/team/kubaev-aisultan.jpeg", imagePosition: "50% 35%" },
-  { name: "Жумабек Алмасбек", role: "Инженер-программист", image: "/images/team/almasbek-zhumabek.jpg", imagePosition: "50% 32%" },
+  { name: "Жумабек Алмасбек", role: "Инженер-программист", image: "/images/team/team-avatar-placeholder.png", imagePosition: "50% 50%" },
 ];
 
 const person = (name: string): Speaker => {
