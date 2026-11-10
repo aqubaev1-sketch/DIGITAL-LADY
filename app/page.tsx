@@ -1502,23 +1502,42 @@ function Laboratories() {
 }
 
 function ProjectCard({ project, index, wide = false }: { project: Project; index: number; wide?: boolean }) {
+  const projectImage = (
+    <div className={`relative overflow-hidden border-b border-ink/15 bg-ink ${wide ? "aspect-video" : "aspect-[4/3]"}`}>
+      <img
+        src={project.image}
+        alt={project.alt}
+        loading="lazy"
+        className="project-card-image absolute inset-0 size-full object-cover grayscale"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent" />
+      <span className="absolute left-4 top-4 bg-lavender px-2.5 py-1 font-mono text-[10px] font-bold tracking-widest text-ink">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <span className="absolute bottom-4 left-4 border border-cream/30 bg-ink/85 px-3 py-1.5 font-mono text-[10px] tracking-widest text-cream uppercase">
+        {project.status}
+      </span>
+      {project.url && (
+        <span className="absolute bottom-4 right-4 border border-lavender bg-lavender px-3 py-1.5 font-mono text-[10px] font-bold tracking-widest text-ink uppercase transition-colors group-hover:bg-cream">
+          Открыть агента ↗
+        </span>
+      )}
+    </div>
+  );
+
   return (
     <li className="project-card reveal group relative -ml-px -mt-px overflow-hidden border border-ink/15 bg-cream">
-      <div className={`relative overflow-hidden border-b border-ink/15 bg-ink ${wide ? "aspect-video" : "aspect-[4/3]"}`}>
-        <img
-          src={project.image}
-          alt={project.alt}
-          loading="lazy"
-          className="project-card-image absolute inset-0 size-full object-cover grayscale"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent" />
-        <span className="absolute left-4 top-4 bg-lavender px-2.5 py-1 font-mono text-[10px] font-bold tracking-widest text-ink">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span className="absolute bottom-4 left-4 border border-cream/30 bg-ink/85 px-3 py-1.5 font-mono text-[10px] tracking-widest text-cream uppercase">
-          {project.status}
-        </span>
-      </div>
+      {project.url ? (
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Открыть агента ${project.name} в новой вкладке`}
+          className="block focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-lavender"
+        >
+          {projectImage}
+        </a>
+      ) : projectImage}
 
       <div className="p-5 md:p-6">
         <h3 className="text-3xl font-medium tracking-[-0.02em]">{project.name}</h3>

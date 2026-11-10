@@ -35,6 +35,7 @@ export type Project = {
   description: string;
   image: string;
   alt: string;
+  url?: string;
   technologies: string[];
   status: string;
   mentor?: string;
@@ -249,6 +250,7 @@ export const AI_AGENT_PROJECTS: Project[] = [
       "AI-агент для методического сопровождения педагогического эксперимента Lesson Study в рамках выпускных работ бакалавров. Помогает организовать исследование, работать по единой методике и анализировать полученные результаты.",
     image: "/images/projects/lessonstudy.jpg",
     alt: "Интерфейс AI-агента Lesson Study Coach",
+    url: "https://lesson-study-2.vercel.app/login",
     technologies: ["AI", "LESSON STUDY", "ПЕДАГОГИКА"],
     status: "В разработке",
     teamName: "Команда Digital Lady Technopark",
@@ -260,6 +262,7 @@ export const AI_AGENT_PROJECTS: Project[] = [
       "Интеллектуальный AI-агент для сопровождения студентов в учебном процессе. Диагностирует уровень знаний, формирует индивидуальную траекторию обучения, помогает готовиться к занятиям и рекомендует подходящие образовательные ресурсы.",
     image: "/images/projects/naviq.jpg",
     alt: "Интерфейс образовательного AI-агента NavIQ",
+    url: "https://auth-ai-agent-psi.vercel.app",
     technologies: ["AI", "АДАПТИВНОЕ ОБУЧЕНИЕ", "УЧЕБНАЯ АНАЛИТИКА"],
     status: "В разработке",
     teamName: "Команда Digital Lady Technopark",
@@ -271,6 +274,7 @@ export const AI_AGENT_PROJECTS: Project[] = [
       "AI-агент для подготовки обучающихся к Единому национальному тестированию. Обеспечивает персонализированное обучение, адаптивное тестирование, анализ результатов и развитие академических навыков.",
     image: "/images/projects/zerde.jpg",
     alt: "Интерфейс AI-агента Zerde для подготовки к ҰБТ",
+    url: "https://testzerde01.vercel.app/",
     technologies: ["AI", "ЕНТ", "АДАПТИВНОЕ ТЕСТИРОВАНИЕ"],
     status: "В разработке",
     teamName: "Команда Digital Lady Technopark",
